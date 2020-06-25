@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "login": "webpack-dev-server --inline --progress --config src/login-flow/webpack.config.js"
   },
   "devDependencies": {
