@@ -2,6 +2,7 @@
   <div class="home-page">
     <h1>Home</h1>
     <h2 v-if="userInfo">hello, {{ userInfo.name }}</h2>
+    <p>{{  $t('label') }} : {{ $t('msg') }}</p>
     <el-button @click="logout">登出</el-button>
   </div>
 </template>

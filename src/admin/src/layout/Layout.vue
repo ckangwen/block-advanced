@@ -1,6 +1,7 @@
 <template>
   <ad-layout v-bind="settings" :collapsed.sync="collapsed" :menu-attrs="menuAttrs">
     <template slot="header-extra">
+      <locale />
       <user-state/>
     </template>
     <template slot="pageHeader">
@@ -14,12 +15,15 @@ import { layoutSettings } from '@/config/settings'
 import { mainRoutes } from '@/router/routes'
 import omit from 'lodash/omit'
 import NavTabs from './components/NavTabs'
-import UserState from './components/UserState'
+import UserState from '@/components/UserState'
+import Locale from '@/components/locale'
 export default {
   name: 'app-layout',
   components: {
     NavTabs,
-    UserState
+    UserState,
+    // eslint-disable-next-line vue/no-unused-components
+    Locale
   },
   data () {
     return {

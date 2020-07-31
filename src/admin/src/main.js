@@ -8,11 +8,13 @@ import '@ckangwen/components/lib/styles/index.css'
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import i18n from './i18n'
 
 Vue.use(ElementUI)
 Vue.use(AdLayout)
 
 new Vue({
+  i18n,
   router,
   store,
   render: h => h(App),

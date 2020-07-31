@@ -5,6 +5,6 @@
 </template>
 <script>
 export default {
-  name: '404'
+  name: 'err_404'
 }
 </script>
