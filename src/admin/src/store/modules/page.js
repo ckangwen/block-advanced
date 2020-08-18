@@ -109,7 +109,6 @@ export default {
         }, { root: true })
 
         const { name = '', query = {}, params = {} } = activePage
-        console.log(activePage)
         router.push({
           name,
           query,

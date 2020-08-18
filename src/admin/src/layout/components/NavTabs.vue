@@ -8,34 +8,48 @@
           :y="contentmenuY"
         >
           <click-menu
-            :list="tabName === 'index' ? contextMenuListHome : contextMenuList"
+            :list="tabName === 'index' ? contextMenuList.slice(contextMenuList.length - 1) : contextMenuList"
             @rowClick="contextMenuClick">
           </click-menu>
         </click-menu-context>
-        <el-tabs
-          class="tp-multiple-page-control"
-          :value="current"
-          type="card"
-          :closable="true"
-          @tab-click="handleClickTab"
-          @edit="closeCurrentTab"
-          @contextmenu.native.prevent="handleContextmenu"
-        >
-          <el-tab-pane
-            v-for="(item) in opened"
-            :key="item.fullPath"
-            :closable="item.name === 'index'"
-            :label="item.meta.title || '未命名'"
-            :name="item.name"
-          />
-        </el-tabs>
+        <div class="tag-view-container">
+          <div
+            :class="[
+              'tag-view-item',
+              'tag-view--fixed',
+              current === item.name ? 'tag-view--active' : ''
+            ]"
+            v-for="(item) in fixedTag"
+            :key="item.name"
+            :data-name="item.name"
+            @click.stop="handleClickTab(item, $event)"
+            @contextmenu.prevent="handleContextmenu"
+          >
+            {{ item.meta && item.meta.title || item.name }}
+            <span class="el-icon-close" @click="removeTab(item.name)"></span>
+          </div>
+          <div
+            :class="[
+              'tag-view-item',
+              current === item.name ? 'tag-view--active' : ''
+            ]"
+            v-for="(item) in opened.slice(1)"
+            :key="item.name"
+            :data-name="item.name"
+            @click="handleClickTab(item, $event)"
+            @contextmenu.prevent="handleContextmenu"
+          >
+            {{ item.meta && item.meta.title || item.name }}
+            <span class="el-icon-close" @click="removeTab(item.name)"></span>
+          </div>
+        </div>
       </div>
     </div>
     <div class="tp-multiple-page-control-btn">
       <el-dropdown
         size="default"
         @command="handleControlItemClick">
-        <el-button :style="{height: '40px', background: 'inherit'}" size="medium" icon="el-icon-circle-close"></el-button>
+        <el-button :style="{height: '42px', background: 'inherit', borderBottomRightRadius: 0, borderBottomLeftRadius: 0 }" size="medium" icon="el-icon-circle-close"></el-button>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item v-for="(item) in contextMenuList" :key="item.value" :command="item.value">
             <span>{{ showTitle(item.title) }}</span>
@@ -62,8 +76,14 @@ export default {
         { icon: 'close', title: '关闭其它', value: 'others' },
         { icon: 'circle-close', title: '关闭全部', value: 'all' }
       ],
-      contextMenuListHome: [
-        { icon: 'circle-close', title: '关闭全部', value: 'all' }
+      fixedTag: [
+        {
+          path: 'index',
+          name: 'Home',
+          meta: {
+            title: '首页'
+          }
+        }
       ],
       showClickMenu: false,
       contentmenuX: 0,
@@ -93,18 +113,12 @@ export default {
       this.closeMethods(value, this.tabName)
     },
     handleContextmenu (e) {
-      let target = e.target
-      let flag = false
-      if (target.classList.contains('el-tabs__item')) {
-        flag = true
-      } else if (target.parentNode.classList.contains('el-tabs__item')) {
-        target = target.parentNode
-        flag = true
-      }
-      if (flag) {
+      const target = e.target
+      const tabName = target && target.dataset && target.dataset.name
+      if (tabName) {
         this.contentmenuX = e.clientX
         this.contentmenuY = e.clientY
-        this.tabName = target.getAttribute('aria-controls').slice(5)
+        this.tabName = tabName
         this.showClickMenu = true
       }
     },
@@ -135,10 +149,8 @@ export default {
         })
       }
     },
-    closeCurrentTab (tabName, action) {
-      if (action === 'remove') {
-        this.close(tabName)
-      }
+    removeTab (tabName) {
+      this.close(tabName)
     },
     showTitle (item) {
       return showTitle(item, this)
@@ -155,30 +167,68 @@ export default {
     flex: 1;
     position: relative;
     overflow: auto;
+    border-bottom: 1px solid #DCDFE6;
   }
   .tp-multiple-page-control-btn {
     flex: 0 0 auto;
     position: relative;
   }
 }
-.el-tabs__nav.is-top {
-  border-left: 0;
-}
-// 隐藏第一个tab的删除按钮
-.tp-multiple-page-control {
-  .el-tabs__nav .el-tabs__item:first-child {
-    &.is-closable:hover {
-      // padding 20 是elTab正常情况下的数值
-      padding-left: 20px;
-      padding-right: 20px;
+
+.tag-view-container {
+  white-space: nowrap;
+  position: relative;
+  transition: transform .3s;
+  float: left;
+  z-index: 2;
+  border: 1px solid #e4e7ed;
+  border-bottom: 0;
+  border-radius: 4px 4px 0 0;
+  box-sizing: border-box;
+
+  .tag-view-item {
+    position: relative;
+    padding: 0 20px;
+    height: 40px;
+    box-sizing: border-box;
+    line-height: 40px;
+    display: inline-block;
+    list-style: none;
+    color: #303133;
+
+    border-bottom: 1px solid transparent;
+    border-left: 1px solid #E4E7ED;
+    transition: color .3s cubic-bezier(.645,.045,.355,1),padding .3s cubic-bezier(.645,.045,.355,1);
+    cursor: pointer;
+
+    &:first-child {
+      border-left: 0;
     }
-    span {
-      display: none;
+    &:not(.tag-view--fixed):hover .el-icon-close {
+      width: 14px;
+      background-color: #ccc;
+      color: #fff;
+    }
+    &.tag-view--active {
+      color: #409eff;
+    }
+
+    .el-icon-close {
+      position: relative;
+      font-size: 12px;
+      width: 0;
+      height: 14px;
+      vertical-align: middle;
+      line-height: 15px;
+      overflow: hidden;
+      transform-origin: 100% 50%;
+
+      border-radius: 50%;
+      text-align: center;
+      transition: all .3s cubic-bezier(.645,.045,.355,1);
+      margin-left: 5px;
     }
   }
-  .el-tabs__nav-prev,
-  .el-tabs__nav-next {
-    padding: 0 6px;
-  }
 }
+
 </style>
