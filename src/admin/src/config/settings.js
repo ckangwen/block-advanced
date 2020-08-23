@@ -1,11 +1,7 @@
-// import { mainRoutes } from '@/router/routes'
-// import omit from 'lodash/omit'
-
-// const routes = mainRoutes.map(item => omit(item, ['component']))
-
 export const layoutSettings = {
   layout: 'sidemenu',
-  fixSiderbar: true
+  fixSiderbar: true,
+  title: 'Vue CMS'
 }
 
 export const systemSettings = {
@@ -23,3 +19,9 @@ export const systemSettings = {
   },
   useI18n: false
 }
+
+export const themeList = [
+  { text: '浅色主题', value: 'light' },
+  { text: '深色主题', value: 'dark' }
+]
+export const defaultTheme = 'light'

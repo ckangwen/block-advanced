@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import user from './modules/user'
 import db from './modules/db'
 import page from './modules/page'
+import theme from './modules/theme'
 
 Vue.use(Vuex)
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
   modules: {
     user,
     db,
-    page
+    page,
+    theme
   }
 })

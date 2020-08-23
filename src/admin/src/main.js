@@ -25,5 +25,6 @@ new Vue({
     this.$store.dispatch('user/load')
     /** 从LocalStorage中加载tab */
     this.$store.dispatch('page/load')
+    this.$store.dispatch('theme/load')
   }
 }).$mount('#app')

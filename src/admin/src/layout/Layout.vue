@@ -1,6 +1,7 @@
 <template>
   <ad-layout v-bind="settings" :collapsed.sync="collapsed" :menu-attrs="menuAttrs">
     <template slot="header-extra">
+      <header-theme />
       <locale />
       <user-state/>
     </template>
@@ -17,13 +18,14 @@ import omit from 'lodash/omit'
 import NavTabs from './components/NavTabs'
 import UserState from '@/components/UserState'
 import Locale from '@/components/locale'
+import HeaderTheme from '@/components/header-theme'
 export default {
   name: 'app-layout',
   components: {
     NavTabs,
     UserState,
-    // eslint-disable-next-line vue/no-unused-components
-    Locale
+    Locale,
+    HeaderTheme
   },
   data () {
     return {
@@ -38,8 +40,3 @@ export default {
   }
 }
 </script>
-<style lang="scss">
-.wen-scrollbar__view > .el-menu {
-  height: calc(100vh - 60px);
-}
-</style>

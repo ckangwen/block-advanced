@@ -1,7 +1,7 @@
 <template>
-  <div class="tp-multiple-page-control-group">
-    <div class="tp-multiple-page-control-content" flex-box="1">
-      <div class="tp-multiple-page-control-content-inner">
+  <div class="tag-view-group-container">
+    <div class="tag-view-group-content" flex-box="1">
+      <div class="tag-view-group-content-inner">
         <click-menu-context
           :visible.sync="showClickMenu"
           :x="contentmenuX"
@@ -45,11 +45,17 @@
         </div>
       </div>
     </div>
-    <div class="tp-multiple-page-control-btn">
+    <div class="tag-view-group-extra">
       <el-dropdown
         size="default"
         @command="handleControlItemClick">
-        <el-button :style="{height: '42px', background: 'inherit', borderBottomRightRadius: 0, borderBottomLeftRadius: 0 }" size="medium" icon="el-icon-circle-close"></el-button>
+        <el-button :style="{
+          height: '42px',
+          background: 'inherit',
+          borderBottomRightRadius: 0,
+          borderBottomLeftRadius: 0,
+          border: 0
+        }" size="medium" icon="el-icon-circle-close"></el-button>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item v-for="(item) in contextMenuList" :key="item.value" :command="item.value">
             <span>{{ showTitle(item.title) }}</span>
@@ -159,22 +165,6 @@ export default {
 }
 </script>
 <style lang="scss">
-.tp-multiple-page-control-group {
-  display: flex;
-  margin-top: -2px;
-
-  .tp-multiple-page-control-content {
-    flex: 1;
-    position: relative;
-    overflow: auto;
-    border-bottom: 1px solid #DCDFE6;
-  }
-  .tp-multiple-page-control-btn {
-    flex: 0 0 auto;
-    position: relative;
-  }
-}
-
 .tag-view-container {
   white-space: nowrap;
   position: relative;

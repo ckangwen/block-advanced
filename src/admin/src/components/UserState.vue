@@ -1,15 +1,17 @@
 <template>
-  <el-dropdown size="small">
-    <span class="user-info">
-      <el-avatar size="small" :src="userInfo.avatar"></el-avatar>
-      <span class="user-status">{{ userInfo.name || '未登录'}}</span>
-    </span>
-    <el-dropdown-menu slot="dropdown">
-      <el-dropdown-item @click.native="userLogout">
-        注销
-      </el-dropdown-item>
-    </el-dropdown-menu>
-  </el-dropdown>
+  <span class="top-header-extra-block">
+    <el-dropdown size="small">
+      <span class="user-info">
+        <el-avatar size="small" :src="userInfo.avatar"></el-avatar>
+        <span style="padding-left: 5px;">{{ userInfo.name || '未登录'}}</span>
+      </span>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item @click.native="userLogout">
+          注销
+        </el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
+  </span>
 </template>
 
 <script>
@@ -35,13 +37,3 @@ export default {
   }
 }
 </script>
-<style>
-.user-info {
-  display: flex;
-  align-items: center;
-  height: 60px;
-}
-.user-info .user-status {
-  margin-left: 10px;
-}
-</style>

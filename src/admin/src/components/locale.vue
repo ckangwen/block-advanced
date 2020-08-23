@@ -1,5 +1,5 @@
 <template>
-  <div class="locale-container">
+  <span class="top-header-extra-block">
     <el-dropdown
       placement="bottom"
       size="small"
@@ -19,7 +19,7 @@
         </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
-  </div>
+  </span>
 </template>
 <script>
 export default {
@@ -31,10 +31,3 @@ export default {
   }
 }
 </script>
-<style>
-.locale-container {
-  display: inline-block;
-  height: 60px;
-  padding-right: 15px;
-}
-</style>
